@@ -29,11 +29,25 @@ class TranscriptionTest extends TestCase {
     }
 
     /** @test */
-    public function it_discards_irrelevant_lines_from_the_vtt_file() {
+    public function it_discards_irrelevant_lines_from_the_vtt_file(): void {
         $path = __DIR__ .'/stubs/basic-example.vtt';
         $transcription = Transcription::load($path);
 
         $this->assertStringNotContainsString('WEBVTT', $transcription);
         $this->assertCount(2, $transcription->lines());
+    }
+
+    /** @test */
+    public function it_render_the_lines_to_html() {
+        $path = __DIR__ .'/stubs/basic-example.vtt';
+        $transcription = Transcription::load($path);
+
+        $expected = <<<EOT
+<a href="?time=00:03">Here is a</a>
+<a href="?time=00:04">example of a VTT file.</a>
+EOT;
+
+        $this->assertEquals($expected, $transcription->htmlLines());
+
     }
 }

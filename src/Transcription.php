@@ -14,6 +14,9 @@ class Transcription {
         return new static(file($path));
     }
 
+    /**
+     * @return Line[]
+     */
     public function lines(): array {
         $lines = [];
         $count = count($this->lines);
@@ -31,5 +34,11 @@ class Transcription {
 
     private static function discardInvalidLines(array $lines): array {
         return array_values(array_filter($lines, static fn($line) => Line::valid($line)));
+    }
+
+    public function htmlLines():string {
+        $htmlLines = array_map(static fn(Line $line) => $line->toAnchorTag(), $this->lines());
+
+        return implode("\n", $htmlLines);
     }
 }
