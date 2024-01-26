@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    volumes:
+      - .:/var/www/html
+  composer:
+    build:
+      context: .
+      dockerfile: composer.dockerfile
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
