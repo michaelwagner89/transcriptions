@@ -43,7 +43,7 @@ class TranscriptionTest extends TestCase {
             <a href="?time=00:04">example of a VTT file.</a>
             EOT;
 
-        $this->assertEquals($expected, $this->transcription->htmlLines());
+        $this->assertEquals($expected, $this->transcription->lines()->asHtml());
 
     }
 }
