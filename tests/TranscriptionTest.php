@@ -46,4 +46,13 @@ class TranscriptionTest extends TestCase {
         $this->assertEquals($expected, $this->transcription->lines()->asHtml());
 
     }
+
+    /** @test */
+    public function it_supports_array_access() {
+
+        $lines = $this->transcription->lines();
+
+        $this->assertInstanceOf(\ArrayAccess::class, $lines);
+        $this->assertInstanceOf(Line::class, $lines[0]);
+    }
 }
