@@ -4,7 +4,7 @@ namespace Laracasts\Transcriptions;
 
 use Traversable;
 
-class Lines implements \Countable, \IteratorAggregate, \ArrayAccess {
+class Lines implements \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerializable {
 
     public function __construct(protected array $lines) {
     }
@@ -45,5 +45,9 @@ class Lines implements \Countable, \IteratorAggregate, \ArrayAccess {
 
     public function offsetUnset(mixed $key) {
         unset($this->lines[$key]);
+    }
+
+    public function jsonSerialize() {
+        return $this->lines;
     }
 }
