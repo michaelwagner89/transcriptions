@@ -7,6 +7,10 @@ class Collection implements \Countable, \IteratorAggregate, \ArrayAccess, \JsonS
     public function __construct(protected array $items) {
     }
 
+    public function map(callable $fn): self {
+        return new static(array_map($fn, $this->items));
+    }
+
     public function offsetUnset(mixed $key) {
         unset($this->items[$key]);
     }
