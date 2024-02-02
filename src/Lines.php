@@ -4,50 +4,15 @@ namespace Laracasts\Transcriptions;
 
 use Traversable;
 
-class Lines implements \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerializable {
-
-    public function __construct(protected array $lines) {
-    }
+class Lines extends Collection  {
 
     public function asHtml():string {
-        $formattedLines = array_map(static fn(Line $line) => $line->toAnchorTag(), $this->lines);
+        $formattedLines = array_map(static fn(Line $line) => $line->toAnchorTag(), $this->items);
 
         return (new static($formattedLines))->__toString();
     }
 
     public function __toString(): string {
-        return implode("\n", $this->lines);
-    }
-
-    #[\Override] public function count(): int {
-        return count($this->lines);
-    }
-
-    #[\Override] public function getIterator(): Traversable {
-        return new \ArrayIterator($this->lines);
-    }
-
-    public function offsetExists(mixed $key) {
-        return isset($this->lines[$key]);
-    }
-
-    public function offsetGet(mixed $key) {
-        return $this->lines[$key];
-    }
-
-    public function offsetSet(mixed $key, mixed $value) {
-        if (is_null($key)) {
-            $this->lines[] = $value;
-        } else {
-            $this->lines[$key] = $value;
-        }
-    }
-
-    public function offsetUnset(mixed $key) {
-        unset($this->lines[$key]);
-    }
-
-    public function jsonSerialize() {
-        return $this->lines;
+        return implode("\n", $this->items);
     }
 }
